@@ -1,6 +1,7 @@
 #include <sil/sil.hpp>
 #include <iostream>
 #include "random.hpp"
+#include <cmath>
 
 void green(sil::Image& image) // Ne gardez que le vert
 {
@@ -84,7 +85,55 @@ void noise(sil::Image &image) // Effet bruité
 void rotation(sil::Image &image)
 {
     sil::Image new_image{image.height(), image.width()};
-    
+
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            int newX = image.height() - 1 - y;
+            int newY = x;
+            new_image.pixel(newX, newY) = image.pixel(x, y);
+        }
+    }
+    image = new_image;
+}
+
+void rgb_split(sil::Image &image)
+{
+    sil::Image copie = image;
+
+    for (int x = 0; x < image.width(); ++x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            // Pour gérer les bords
+            int x_left = std::max(x - 10, 0); // Si on arrive au bord gauche, x = 0
+            int x_right = std::min(x + 10, image.width() - 1); // Si on arrive au bord droit, x = width - 1
+
+            float c1 = copie.pixel(x_left, y).r; // Rouge d'un pixel à sa gauche
+            float c2 = copie.pixel(x, y).g;
+            float c3 = copie.pixel(x_right, y).b; // Bleu d'un pixel à sa droite
+
+            image.pixel(x, y) = glm::vec3(c1, c2, c3);
+        }
+    }
+}
+
+void brightness(sil::Image &image)
+{
+    float exponent = 0.75;
+    for (int x = 0; x < image.width(); ++x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            image.pixel(x, y) *= exponent;
+        }
+    }
+}
+
+void disk(sil::Image &image)
+{
+
 }
 
 int main()
@@ -117,16 +166,31 @@ int main()
     // {
     //     sil::Image image{"images/logo.png"};
     //     mirror(image);
-    //     image.save("output/mirroir_imac.png");
+    //     image.save("output/miroir_imac.png");
     // }
     // {
     //     sil::Image image{"images/logo.png"};
     //     noise(image);
     //     image.save("output/bruit_imac.png");
     // }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     rotation(image);
+    //     image.save("output/rotation90_imac.png");
+    // }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     rgb_split(image);
+    //     image.save("output/rgb_split_imac.png");
+    // }
+    // {
+    //     sil::Image image{"images/photo.jpg"};
+    //     brightness(image);
+    //     image.save("output/low_lum_imac.png");
+    // } 
     {
-        sil::Image image{"images/logo.png"};
-        rotation(image);
-        image.save("output/rotation90_imac.png");
+        sil::Image image{500/*width*/, 500/*height*/};
+        disk(image);
+        image.save("output/disque.png");
     }
 }
