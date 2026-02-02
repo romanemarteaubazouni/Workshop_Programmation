@@ -206,13 +206,13 @@ void mosaique(sil::Image &image)
 void mosaique_mirror(sil::Image &image)
 {
     sil::Image mosaique {image.width(), image.height()};
-
+    // On initalise un compteur pour repérer le bloc "impair" (miroir) et des blocs "pairs" (normaux)
     int compteur = 0;
     int previous_pixel_x = -1;
 
     for (int x = 0; x < image.width(); ++x)
     {
-        // Si rebouclage, alors (x * 5) % image.width() est reparti de 0
+        // Si rebouclage, alors (x * 5) % image.width() repart de 0
         if ((x * 5) % image.width() < previous_pixel_x)
         {
             compteur++; // On est passé à un autre bloc
@@ -231,6 +231,66 @@ void mosaique_mirror(sil::Image &image)
                 x_final = (x * 5) % image.width();
             }
             mosaique.pixel(x, y) = image.pixel(x_final, (y * 5) % image.height());
+        }
+    }
+    image = mosaique;
+}
+
+/*Pour faire comme dans l'énoncé, il faut aussi qu'ule ligne sur deux soit retournée*/
+
+void mosaique_double_mirror(sil::Image &image)
+{
+    sil::Image mosaique {image.width(), image.height()};
+    // On initalise un compteur pour repérer le bloc "impair" (miroir) et des blocs "pairs" (normaux) et les lignes "paires" et "impaires"
+    int compteur_columns = 0;
+    int compteur_lines = 0;
+
+    int previous_pixel_x = -1;
+    int previous_pixel_y = -1;
+
+    for (int x = 0; x < image.width(); ++x)
+    {
+        // Si rebouclage, alors (x * 5) % image.width() repart de 0
+        if ((x * 5) % image.width() < previous_pixel_x)
+        {
+            compteur_columns++; // On est passé à un autre bloc
+        }
+        previous_pixel_x = (x * 5) % image.width();
+
+        // On remet à jour pour chaque nouvelle colonne
+        compteur_lines = 0;
+        previous_pixel_y = -1;
+
+        for (int y = 0; y < image.height(); ++y)
+        {
+            // Si saut de ligne, alors (y * 5) % image.height() repart de 0
+            if ((y * 5) % image.height() < previous_pixel_y)
+            {
+                compteur_lines++; // On est passé à une autre ligne
+            }
+            previous_pixel_y = (y * 5) % image.height();
+            
+            
+            int x_final{};
+            int y_final{};
+            if (compteur_columns % 2 == 1)
+            {
+                x_final = image.width() - 1 - (x * 5) % image.width(); // Si bloc impair, on applique l'effet miroir
+            }
+            else
+            {
+                x_final = (x * 5) % image.width();
+            }
+
+            if (compteur_lines % 2 == 1)
+            {
+                y_final = image.height() - 1 - (y * 5) % image.height(); // Si bloc impair, on applique l'effet miroir
+            }
+            else
+            {
+                y_final = (y * 5) % image.height();
+            }
+            mosaique.pixel(x, y) = image.pixel(x_final, y_final);
         }
     }
     image = mosaique;
@@ -323,9 +383,14 @@ int main()
     //     mosaique(image);
     //     image.save("output/mosaique_imac.png");
     // }
-    {
-        sil::Image image{"images/logo.png"};
-        mosaique_mirror(image);
-        image.save("output/mosaique_miroir_imac.png");
-    }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     mosaique_mirror(image);
+    //     image.save("output/mosaique_miroir_imac.png");
+    // }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     mosaique_double_mirror(image);
+    //     image.save("output/mosaique_double_miroir_imac.png");
+    // }
 }

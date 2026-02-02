@@ -35,14 +35,16 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/high_lum_imac.png)
 ![alt text](./output/low_lum_imac.png)
 
-## Exercice 11 :
-![alt text](./output/rgb_split_imac.png)
 
-## Exercice 12 :
+## Exercice 11 :
 ![alt text](./output/disque.png)
 ![alt text](./output/cercle.png)
 ![alt text](./output/animation/disque_animation.gif)
 ![alt text](./output/rosace.png)
 
-## Exercice 13 :
+## Exercice 12 :
 ![alt text](./output/mosaique_imac.png)
+![alt text](./output/mosaique_miroir_imac.png)
+![alt text](./output/mosaique_double_miroir_imac.png)
+
+## Exercice 13 :
