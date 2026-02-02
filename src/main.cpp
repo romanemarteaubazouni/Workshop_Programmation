@@ -187,6 +187,30 @@ void circle(sil::Image &image)
     }
 }
 
+void animation(sil::Image &image, float centerX, float centerY)
+{
+    int r = 150;
+
+    for (int x = 0; x < image.width(); ++x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            // Formule du disque
+            float dx = x - centerX; // Distance au centre en x
+            float dy = y - centerY; // Distance au centre en y
+
+            if (dx*dx + dy*dy <= r*r)
+            {
+                image.pixel(x, y) = {1.f, 1.f, 1.f};
+            }
+            else
+            {
+                image.pixel(x, y) = {0.f, 0.f, 0.f};
+            }
+        }
+    }
+}
+
 
 int main()
 {
@@ -250,4 +274,18 @@ int main()
     //     circle(image);
     //     image.save("output/cercle.png");
     // }
+
+    {
+        int numberOfImages = 11; // Nombre d'images pour l'animation
+        
+        for (int i = 0; i < numberOfImages; ++i)
+        {
+            sil::Image image{500, 500};
+
+            animation(image, i * 50.f, image.height()/2.f);
+
+            image.save("output/animation/animation_" + std::to_string(i) + ".png");
+        }
+    }
+
 }
