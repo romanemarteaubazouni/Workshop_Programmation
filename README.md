@@ -37,3 +37,7 @@ Workshop de ProgAlgo, IMAC2028 S1
 
 ## Exercice 11 :
 ![alt text](./output/rgb_split_imac.png)
+
+## Exercice 12 :
+![alt text](./output/disque.png)
+![alt text](./output/cercle.png)

@@ -82,7 +82,7 @@ void noise(sil::Image &image) // Effet bruité
     }
 }
 
-void rotation(sil::Image &image)
+void rotation(sil::Image &image) // Rotation de 90]
 {
     sil::Image new_image{image.height(), image.width()};
 
@@ -119,7 +119,7 @@ void rgb_split(sil::Image &image)
     }
 }
 
-void brightness(sil::Image &image)
+void brightness(sil::Image &image) // Modifier la luminosité (ici, elle s'assombrit car exponent < 1)
 {
     float exponent = 0.75;
     for (int x = 0; x < image.width(); ++x)
@@ -133,8 +133,60 @@ void brightness(sil::Image &image)
 
 void disk(sil::Image &image)
 {
+    int r = 150;
+    // Centre de l'image
+    float centerX = image.width() / 2.0f;
+    float centerY = image.height() / 2.0f;
 
+    for (int x = 0; x < image.width(); ++x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            // Formule du disque
+            float dx = x - centerX; // Distance au centre en x
+            float dy = y - centerY; // Distance au centre en y
+
+            if (dx*dx + dy*dy <= r*r)
+            {
+                image.pixel(x, y) = {1.f, 1.f, 1.f};
+            }
+            else
+            {
+                image.pixel(x, y) = {0.f, 0.f, 0.f};
+            }
+        }
+    }
 }
+
+void circle(sil::Image &image)
+{
+    // Rayon
+    int r = 150;
+    int thickness = 10;
+    // Centre de l'image
+    float centerX = image.width() / 2.0f;
+    float centerY = image.height() / 2.0f;
+
+    for (int x = 0; x < image.width(); ++x)
+    {
+        for (int y = 0; y < image.height(); ++y)
+        {
+            // Formule du disque
+            float dx = x - centerX; // Distance au centre en x
+            float dy = y - centerY; // Distance au centre en y
+
+            if ((dx*dx + dy*dy <= r*r) && (dx*dx + dy*dy > (r-thickness)*(r-thickness)))
+            {
+                image.pixel(x, y) = {1.f, 1.f, 1.f};
+            }
+            else
+            {
+                image.pixel(x, y) = {0.f, 0.f, 0.f};
+            }
+        }
+    }
+}
+
 
 int main()
 {
@@ -188,9 +240,14 @@ int main()
     //     brightness(image);
     //     image.save("output/low_lum_imac.png");
     // } 
-    {
-        sil::Image image{500/*width*/, 500/*height*/};
-        disk(image);
-        image.save("output/disque.png");
-    }
+    // {
+    //     sil::Image image{500/*width*/, 500/*height*/};
+    //     disk(image);
+    //     image.save("output/disque.png");
+    // }
+    // {
+    //     sil::Image image{500/*width*/, 500/*height*/};
+    //     circle(image);
+    //     image.save("output/cercle.png");
+    // }
 }
