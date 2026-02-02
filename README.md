@@ -2,7 +2,6 @@
 
 Workshop de ProgAlgo, IMAC2028 S1
 
-# 1 étoile
 ## Exercice 1 :
 ![alt text](./output/green_imac.png)
 
@@ -18,7 +17,6 @@ Workshop de ProgAlgo, IMAC2028 S1
 ## Exercice 5 :
 ![alt text](./output/degrade_n&b.png)
 
-# 2 étoiles
 ## Exercice 6 :
 ![alt text](./output/miroir_imac.png)
 
@@ -35,7 +33,6 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/high_lum_imac.png)
 ![alt text](./output/low_lum_imac.png)
 
-
 ## Exercice 11 :
 ![alt text](./output/disque.png)
 ![alt text](./output/cercle.png)
@@ -47,5 +44,12 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/mosaique_miroir_imac.png)
 ![alt text](./output/mosaique_double_miroir_imac.png)
 
+## Exercice 13 :
+
+## Exercice 14 :
+
 ## Exercice 15 :
 ![alt text](./output/fractale.png)
+
+## Exercice 16 :
+![alt text](./output/degrade_couleur.png)

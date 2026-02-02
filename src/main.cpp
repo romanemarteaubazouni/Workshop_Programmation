@@ -296,6 +296,8 @@ void mosaique_double_mirror(sil::Image &image)
     image = mosaique;
 }
 
+// glitch + tri de pixels
+
 void fractals(sil::Image &image)
 {
     for (int x {0}; x < image.width(); ++x)
@@ -326,6 +328,21 @@ void fractals(sil::Image &image)
             {
                 image.pixel(x, y) = glm::vec3(1.f);
             }
+        }
+    }
+}
+
+void fading_color(sil::Image& image) // Dégradé de couleurs
+{
+    glm::vec3 a(1.f, 0.f, 0.f); // Rouge
+    glm::vec3 b(0.f, 1.f, 0.f); // Vert
+    for (int x {0}; x < image.width(); ++x)
+    {
+        float t = x / 300.f; // Pourcentage de mélange entre les deux couleurs
+
+        for (int y {0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y) = glm::mix(a, b, t); // Colonne de pixels de même couleur (mélange de rouge et vert)
         }
     }
 }
@@ -427,9 +444,14 @@ int main()
     //     mosaique_double_mirror(image);
     //     image.save("output/mosaique_double_miroir_imac.png");
     // }
+    // {
+    //     sil::Image image{500, 500};
+    //     fractals(image);
+    //     image.save("output/fractale.png");
+    // }
     {
-        sil::Image image{500, 500};
-        fractals(image);
-        image.save("output/fractale.png");
+        sil::Image image{300, 200};
+        fading_color(image);
+        image.save("output/degrade_couleur.png");
     }
 }
