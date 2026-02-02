@@ -47,4 +47,5 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/mosaique_miroir_imac.png)
 ![alt text](./output/mosaique_double_miroir_imac.png)
 
-## Exercice 13 :
+## Exercice 15 :
+![alt text](./output/fractale.png)

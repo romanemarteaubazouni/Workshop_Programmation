@@ -2,6 +2,7 @@
 #include <iostream>
 #include "random.hpp"
 #include <cmath>
+#include <complex>
 
 void green(sil::Image& image) // Ne gardez que le vert
 {
@@ -184,7 +185,7 @@ void rosace(sil::Image &image)
         circle(image, 250.f + r * cos(teta), 250.f + r * sin(teta)); // Passage cartésiennes --> polaires
     }
 }
-
+/*********************** MOSAIQUES (en plusieurs étapes) *************************/
 void mosaique(sil::Image &image)
 {
     sil::Image mosaique {image.width(), image.height()};
@@ -270,7 +271,6 @@ void mosaique_double_mirror(sil::Image &image)
             }
             previous_pixel_y = (y * 5) % image.height();
             
-            
             int x_final{};
             int y_final{};
             if (compteur_columns % 2 == 1)
@@ -294,6 +294,40 @@ void mosaique_double_mirror(sil::Image &image)
         }
     }
     image = mosaique;
+}
+
+void fractals(sil::Image &image)
+{
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            float r = (x / 500.f) * 3.f - 2.f; // Conversion de x entre 0 et 500 --> -2 et 1
+            float im = (y / 500.f) * 3.f - 1.5; // Conversion de x entre 0 et 500 --> -1.5 et 1.5
+            std::complex<float> c{r, im};
+            std::complex<float> z{0, 0};
+
+            int compteur{};
+
+            for (int i{}; i < 200; ++i)
+            {
+                z = z*z + c;
+                
+                if (std::abs(z) > 2)
+                {
+                    float grey = i / 200.f;
+                    image.pixel(x, y) = glm::vec3(grey*10);
+                    break;
+                }
+                ++compteur;
+            }
+
+            if (compteur == 200)
+            {
+                image.pixel(x, y) = glm::vec3(1.f);
+            }
+        }
+    }
 }
 
 int main()
@@ -393,4 +427,9 @@ int main()
     //     mosaique_double_mirror(image);
     //     image.save("output/mosaique_double_miroir_imac.png");
     // }
+    {
+        sil::Image image{500, 500};
+        fractals(image);
+        image.save("output/fractale.png");
+    }
 }
