@@ -185,6 +185,22 @@ void rosace(sil::Image &image)
     }
 }
 
+void mosaique(sil::Image &image)
+{
+    sil::Image mosaique {image.width(), image.height()};
+
+    // On parcourt l'image d'arrivée
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            mosaique.pixel(x, y) = image.pixel((x * 5) % image.width(), (y * 5) % image.height()); // On reboucle quand l'image IMAC se répète
+            // Rmq : si on augmente le facteur (ici 5), on a une mosaique avec plus de répétition
+        }
+    }
+    image = mosaique;
+}
+
 int main()
 {
     // {
@@ -248,6 +264,7 @@ int main()
     //     image.save("output/cercle.png");
     // }
 
+/**************** Animation disque ******************/
     // {
     //     int numberOfImages = 11; // Nombre d'images pour l'animation
         
@@ -261,9 +278,14 @@ int main()
     //     }
     // }
 
-    {
-        sil::Image image{500/*width*/, 500/*height*/};
-        rosace(image);
-        image.save("output/rosace.png");
-    }
+    // {
+    //     sil::Image image{500/*width*/, 500/*height*/};
+    //     rosace(image);
+    //     image.save("output/rosace.png");
+    // }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     mosaique(image);
+    //     image.save("output/mosaique_imac.png");
+    // }
 }

@@ -45,3 +45,4 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/rosace.png)
 
 ## Exercice 13 :
+![alt text](./output/mosaique_imac.png)
