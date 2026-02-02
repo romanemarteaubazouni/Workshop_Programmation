@@ -83,7 +83,8 @@ void noise(sil::Image &image) // Effet bruité
 
 void rotation(sil::Image &image)
 {
-
+    sil::Image new_image{image.height(), image.width()};
+    
 }
 
 int main()
