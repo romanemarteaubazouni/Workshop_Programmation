@@ -201,6 +201,41 @@ void mosaique(sil::Image &image)
     image = mosaique;
 }
 
+/*Idée pour la mosaïque miroir : on reprend le code précédent, puis dès q'uon boucle on inverse l'image (cad dès que x * 5 % image.width passe à 0)*/
+
+void mosaique_mirror(sil::Image &image)
+{
+    sil::Image mosaique {image.width(), image.height()};
+
+    int compteur = 0;
+    int previous_pixel_x = -1;
+
+    for (int x = 0; x < image.width(); ++x)
+    {
+        // Si rebouclage, alors (x * 5) % image.width() est reparti de 0
+        if ((x * 5) % image.width() < previous_pixel_x)
+        {
+            compteur++; // On est passé à un autre bloc
+        }
+        previous_pixel_x = (x * 5) % image.width();
+
+        for (int y = 0; y < image.height(); ++y)
+        {
+            int x_final{};
+            if (compteur % 2 == 1)
+            {
+                x_final = image.width() - 1 - (x * 5) % image.width(); // Si bloc impair, on applique l'effet miroir
+            }
+            else
+            {
+                x_final = (x * 5) % image.width();
+            }
+            mosaique.pixel(x, y) = image.pixel(x_final, (y * 5) % image.height());
+        }
+    }
+    image = mosaique;
+}
+
 int main()
 {
     // {
@@ -288,4 +323,9 @@ int main()
     //     mosaique(image);
     //     image.save("output/mosaique_imac.png");
     // }
+    {
+        sil::Image image{"images/logo.png"};
+        mosaique_mirror(image);
+        image.save("output/mosaique_miroir_imac.png");
+    }
 }
