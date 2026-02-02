@@ -131,12 +131,9 @@ void brightness(sil::Image &image) // Modifier la luminosité (ici, elle s'assom
     }
 }
 
-void disk(sil::Image &image)
+void disk(sil::Image &image, float centerX, float centerY) // Mettre les coordonnées du centre en paramètres est pratique pour la suite (animation)
 {
     int r = 150;
-    // Centre de l'image
-    float centerX = image.width() / 2.0f;
-    float centerY = image.height() / 2.0f;
 
     for (int x = 0; x < image.width(); ++x)
     {
@@ -158,14 +155,11 @@ void disk(sil::Image &image)
     }
 }
 
-void circle(sil::Image &image)
+void circle(sil::Image &image, float centerX, float centerY)
 {
     // Rayon
     int r = 150;
     int thickness = 10;
-    // Centre de l'image
-    float centerX = image.width() / 2.0f;
-    float centerY = image.height() / 2.0f;
 
     for (int x = 0; x < image.width(); ++x)
     {
@@ -187,30 +181,10 @@ void circle(sil::Image &image)
     }
 }
 
-void animation(sil::Image &image, float centerX, float centerY)
+void rosace(sil::Image &image)
 {
-    int r = 150;
-
-    for (int x = 0; x < image.width(); ++x)
-    {
-        for (int y = 0; y < image.height(); ++y)
-        {
-            // Formule du disque
-            float dx = x - centerX; // Distance au centre en x
-            float dy = y - centerY; // Distance au centre en y
-
-            if (dx*dx + dy*dy <= r*r)
-            {
-                image.pixel(x, y) = {1.f, 1.f, 1.f};
-            }
-            else
-            {
-                image.pixel(x, y) = {0.f, 0.f, 0.f};
-            }
-        }
-    }
+    
 }
-
 
 int main()
 {
@@ -266,26 +240,31 @@ int main()
     // } 
     // {
     //     sil::Image image{500/*width*/, 500/*height*/};
-    //     disk(image);
+    //     disk(image, 250.f, 250.f);
     //     image.save("output/disque.png");
     // }
     // {
     //     sil::Image image{500/*width*/, 500/*height*/};
-    //     circle(image);
+    //     circle(image, 250.f, 250.f);
     //     image.save("output/cercle.png");
     // }
 
-    {
-        int numberOfImages = 11; // Nombre d'images pour l'animation
+    // {
+    //     int numberOfImages = 11; // Nombre d'images pour l'animation
         
-        for (int i = 0; i < numberOfImages; ++i)
-        {
-            sil::Image image{500, 500};
+    //     for (int i = 0; i < numberOfImages; ++i)
+    //     {
+    //         sil::Image image{500, 500};
 
-            animation(image, i * 50.f, image.height()/2.f);
+    //         disk(image, i * 50.f, image.height()/2.f);
 
-            image.save("output/animation/animation_" + std::to_string(i) + ".png");
-        }
+    //         image.save("output/animation/animation_" + std::to_string(i) + ".png");
+    //     }
+    // }
+
+    {
+        sil::Image image{500/*width*/, 500/*height*/};
+        rosace(image);
+        image.save("output/rosace.png");
     }
-
 }
