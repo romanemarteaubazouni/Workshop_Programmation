@@ -42,3 +42,6 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/disque.png)
 ![alt text](./output/cercle.png)
 ![alt text](./output/animation/disque_animation.gif)
+![alt text](./output/rosace.png)
+
+## Exercice 13 :

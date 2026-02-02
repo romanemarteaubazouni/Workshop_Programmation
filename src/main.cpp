@@ -147,10 +147,6 @@ void disk(sil::Image &image, float centerX, float centerY) // Mettre les coordon
             {
                 image.pixel(x, y) = {1.f, 1.f, 1.f};
             }
-            else
-            {
-                image.pixel(x, y) = {0.f, 0.f, 0.f};
-            }
         }
     }
 }
@@ -158,8 +154,8 @@ void disk(sil::Image &image, float centerX, float centerY) // Mettre les coordon
 void circle(sil::Image &image, float centerX, float centerY)
 {
     // Rayon
-    int r = 150;
-    int thickness = 10;
+    int r = 120;
+    int thickness = 5;
 
     for (int x = 0; x < image.width(); ++x)
     {
@@ -173,17 +169,20 @@ void circle(sil::Image &image, float centerX, float centerY)
             {
                 image.pixel(x, y) = {1.f, 1.f, 1.f};
             }
-            else
-            {
-                image.pixel(x, y) = {0.f, 0.f, 0.f};
-            }
         }
     }
 }
 
 void rosace(sil::Image &image)
 {
-    
+    circle(image, 250.f, 250.f); // Cercle central
+
+    int r = 120; // Rayon du cercle central
+
+    for (float teta{0}; teta <= 2*M_PI; teta += M_PI/3) // Les 6 cercles
+    {
+        circle(image, 250.f + r * cos(teta), 250.f + r * sin(teta)); // Passage cartésiennes --> polaires
+    }
 }
 
 int main()
