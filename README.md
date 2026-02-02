@@ -1,3 +1,3 @@
-# 🐣 S1 | Prog: Workshop
+# S1 | Prog&Algo: Workshop
 
-Template de projet pour le workshop de prog des Imac1. Vous trouverez le sujet ici: https://dsmte.github.io/Learn--cpp_programming/Workshop
+Workshop de ProgAlgo, IMAC2028 S1
