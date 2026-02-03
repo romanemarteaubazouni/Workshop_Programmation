@@ -3,6 +3,7 @@
 #include "random.hpp"
 #include <cmath>
 #include <complex>
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 void green(sil::Image& image) // Ne gardez que le vert
 {
@@ -540,9 +541,27 @@ void normalisation(sil::Image& image)
     }
 }
 
+/***********Vortex*************/
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
+{
+    return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
+}
+
 void vortex(sil::Image& image)
 {
-//
+/*Principe :
+- chaque point subit une rotation autour du centre de l'image (image.width()/2.f et image.height()/2.f);
+- plus en s'éloigne plus l'angle de rotation est grand (prop à la distance)
+*/
+    glm::vec3 center = image.pixel(image.width()/2.f, image.height()/2.f);
+    for (int x{}; x < image.width(); ++x)
+    {
+        for (int y{}; y < image.height(); ++y)
+        {
+            float angle = glm::distance(image.pixel(x, y), center);
+            rotated({x, y}, {image.width()/2.f, image.height()/2.f}, angle);
+        }
+    }
 }
 
 int main()
@@ -572,7 +591,7 @@ int main()
     // }
 
     {
-        sil::Image image{"images/photo_faible_contraste.jpg"};
+        sil::Image image{"images/logo.png"};
         vortex(image);
         image.save("output/vortex.png");
     }
