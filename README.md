@@ -2,6 +2,8 @@
 
 Workshop de ProgAlgo, IMAC2028 S1
 
+L'aspect mathématique des exercices m'a facilité la vie !
+
 ## Exercice 1 :
 ![alt text](./output/green_imac.png)
 
@@ -45,6 +47,7 @@ Workshop de ProgAlgo, IMAC2028 S1
 ![alt text](./output/mosaique_double_miroir_imac.png)
 
 ## Exercice 13 :
+![alt text](./output/glitch.png)
 
 ## Exercice 14 :
 

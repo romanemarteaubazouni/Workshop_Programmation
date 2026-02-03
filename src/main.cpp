@@ -83,7 +83,7 @@ void noise(sil::Image &image) // Effet bruité
     }
 }
 
-void rotation(sil::Image &image) // Rotation de 90]
+void rotation(sil::Image &image) // Rotation de 90°
 {
     sil::Image new_image{image.height(), image.width()};
 
@@ -296,7 +296,36 @@ void mosaique_double_mirror(sil::Image &image)
     image = mosaique;
 }
 
-// glitch + tri de pixels
+void glitch(sil::Image &image)
+{
+    int numberOfRect = random_int(0, 100); // Nombre de rectangles
+    
+    for (int r {0}; r < numberOfRect; ++r)
+    {
+        // Tailles des rectangles
+        int w = random_int(1, 50);
+        int h = random_int(1, 10);
+
+        // Positions aléatoires (départ)
+        int x1 = random_int(0, image.width() - w); // Ne dépassera pas les bornes
+        int y1 = random_int(0, image.height() - h);
+
+        // Positions aléatoires (arrivée)
+        int x2 = random_int(0, image.width() - w);
+        int y2 = random_int(0, image.height() - h);
+
+        for (int i {}; i < w; ++i)
+        {
+            for (int j {}; j < h; ++j)
+            {
+                // Interpolation des pixels
+                glm::vec3 save = image.pixel(i + x1,j + y1);
+                image.pixel(i + x1,j + y1) = image.pixel(i + x2, j + y2);
+                image.pixel(i + x2, j + y2) = save;
+            }
+        }
+    }
+}
 
 void fractals(sil::Image &image)
 {
@@ -449,9 +478,14 @@ int main()
     //     fractals(image);
     //     image.save("output/fractale.png");
     // }
+    // {
+    //     sil::Image image{300, 200};
+    //     fading_color(image);
+    //     image.save("output/degrade_couleur.png");
+    // }
     {
-        sil::Image image{300, 200};
-        fading_color(image);
-        image.save("output/degrade_couleur.png");
+        sil::Image image{"images/logo.png"};
+        glitch(image);
+        image.save("output/glitch.png");
     }
 }
