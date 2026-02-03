@@ -4,30 +4,21 @@ Workshop de ProgAlgo, IMAC2028 S1
 
 Tous les exercices ont été réalisés sous forme de fonctions individuelles, puis la création des images a été faite dans le main, sous la forme suivante :
 
+```
 int main()
 {
-
     {
-
         sil::Image image{"images/logo.png"}; // Lis l'image
-
         green(image); // Utilise la fonction pour modifier l'image
-
         image.save("output/green_imac.png"); // Sauvegarde l'image
-
     }
-
     {
-
         sil::Image image{"images/logo.png"};
-        
         swapRedBlue(image);
-        
         image.save("output/swaped_imac.png");
-    
     }
-
 }
+```
 
 Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
 
