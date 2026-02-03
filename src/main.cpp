@@ -509,16 +509,14 @@ void tramage(sil::Image& image)
 //
 }
 
-// Marche mais en noir et blanc... bof
 void normalisation(sil::Image& image)
 {
     float recordDark = 2.f;
     float recordLight = -1.f;
 
     // On cherche le pixel le plus lumineux et le plus sombre
-    for (int i {}; i < image.pixels().size(); ++i)
+    for (glm::vec3& pix : image.pixels())
     {
-        glm::vec3 pix = image.pixels()[i];
         float b = (pix.r + pix.g + pix.b) / 3.f; // Brightness
 
         if (b < recordDark) // Si la luminosité est plus grande que le record, il le devient
@@ -530,14 +528,21 @@ void normalisation(sil::Image& image)
             recordLight = b;
         }
     }
+
     // Pour chaque pixel, on adapte la luminosité en fonction des extrêmes
     for (glm::vec3& pix : image.pixels())
     {
-        float b = (pix.r + pix.g + pix.b) / 3.f; // Brightness
-        float newLum = (b - recordDark)/(recordLight - recordDark);
+        float newR = (pix.r - recordDark)/(recordLight - recordDark);
+        float newG = (pix.g - recordDark)/(recordLight - recordDark);
+        float newB = (pix.b - recordDark)/(recordLight - recordDark);
 
-        pix = glm::vec3(newLum);
+        pix = glm::vec3(newR, newG, newB);
     }
+}
+
+void vortex(sil::Image& image)
+{
+//
 }
 
 int main()
@@ -568,7 +573,7 @@ int main()
 
     {
         sil::Image image{"images/photo_faible_contraste.jpg"};
-        normalisation(image);
-        image.save("output/normalisation_de_histogramme.png");
+        vortex(image);
+        image.save("output/vortex.png");
     }
 }

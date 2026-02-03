@@ -79,3 +79,24 @@ J'ai laissé une fonction différente par étape de mosaïques afin de laisser m
 ## Exercice 16 :
 ![alt text](./output/degrade_couleur.png)
 ![alt text](./output/degrade_couleur_ameliore.png)
+
+## Exercice 17 :
+
+## Exercice 18 :
+Au début, j'avais la logique suivante :
+```
+void normalisation(sil::Image& image)
+{
+    ...
+    // Pour chaque pixel, on adapte la luminosité en fonction des extrêmes
+    for (glm::vec3& pix : image.pixels())
+    {
+        float b = (pix.r + pix.g + pix.b) / 3.f; // Brightness
+        float newLum = (b - recordDark)/(recordLight - recordDark);
+
+        pix = glm::vec3(newLum);
+    }
+}
+```
+Je normalisais donc la luminorisité de toutes les composantes en même temps (et non pas chaque composante individuellement) ce qui me donnait un rendu en gris. Après plusieurs essais, j'ai donc séparé les composantes.
+![alt text](./output/normalisation_de_histogramme.png)
