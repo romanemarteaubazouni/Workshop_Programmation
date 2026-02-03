@@ -22,7 +22,7 @@ int main()
 
 Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
 
-RMQ : L'aspect mathématique des exercices m'a facilité la vie !
+RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa)!
 
 ## Exercice 1 :
 ![alt text](./output/green_imac.png)
@@ -78,3 +78,4 @@ J'ai laissé une fonction différente par étape de mosaïques afin de laisser m
 
 ## Exercice 16 :
 ![alt text](./output/degrade_couleur.png)
+![alt text](./output/degrade_couleur_ameliore.png)
