@@ -22,7 +22,8 @@ int main()
 
 Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
 
-RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa)!
+RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa) et j'ai pu avancé rapidement sur les rosaces et rotations !
+La fractale de Mandelbrot avait déjà été codée de mon coté (workshop d'Anthony).
 
 ## Exercice 1 :
 ![alt text](./output/green_imac.png)
