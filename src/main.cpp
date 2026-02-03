@@ -327,6 +327,45 @@ void glitch(sil::Image &image)
     }
 }
 
+void tri_pixels(sil::Image &image)
+{
+    int numberOfLines = random_int(0, 400); // Nombre de lignes
+    
+    for (int l {0}; l < numberOfLines; ++l)
+    {
+        // Tailles des lignes
+        int size = random_int(1, 150);
+
+        // Positions aléatoires (départ)
+        int x1 = random_int(0, image.width() - size); // Ne dépassera pas les bornes
+        int y1 = random_int(0, image.height() - 1);
+
+        // Principe de tri la vidéo
+        for (int i {x1}; i < (size+x1); ++i)
+        {
+            float record = -1.f;
+            int selectedPixel = i;
+                
+            for (int j = i; j < (size+x1); j++)
+            {
+                    glm::vec3 pix = image.pixels()[y1 * image.width() + j]; // Car tableau de pixels 1D (!= 2D)
+                    float b = (pix.r + pix.g + pix.b) / 3.f; // Brightness
+
+                    if (b > record) // Si la luminosité est plus grande que le record, il le devient
+                    {
+                        selectedPixel = j;
+                        record = b;
+                    }
+                }
+
+                // Swap selectedPixel with i (on met en premier les plus lumineux)
+                glm::vec3 saved = image.pixels()[y1 * image.width() + i];
+                image.pixels()[y1 * image.width() + i] = image.pixels()[y1 * image.width() + selectedPixel];
+                image.pixels()[y1 * image.width() + selectedPixel] = saved;
+            }
+    }
+}
+
 void fractals(sil::Image &image)
 {
     for (int x {0}; x < image.width(); ++x)
@@ -384,61 +423,10 @@ int main()
     //     image.save("output/green_imac.png"); // Sauvegarde l'image
     // }
     // {
-    //     sil::Image image{"images/logo.png"};
-    //     swapRedBlue(image);
-    //     image.save("output/swaped_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     blackAndWhite(image);
-    //     image.save("output/n&b_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     negative(image);
-    //     image.save("output/negatif_imac.png");
-    // }
-    // {
     //     sil::Image image{300/*width*/, 200/*height*/};
     //     fading(image);
     //     image.save("output/degrade_n&b.png");
     // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     mirror(image);
-    //     image.save("output/miroir_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     noise(image);
-    //     image.save("output/bruit_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     rotation(image);
-    //     image.save("output/rotation90_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     rgb_split(image);
-    //     image.save("output/rgb_split_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/photo.jpg"};
-    //     brightness(image);
-    //     image.save("output/low_lum_imac.png");
-    // } 
-    // {
-    //     sil::Image image{500/*width*/, 500/*height*/};
-    //     disk(image, 250.f, 250.f);
-    //     image.save("output/disque.png");
-    // }
-    // {
-    //     sil::Image image{500/*width*/, 500/*height*/};
-    //     circle(image, 250.f, 250.f);
-    //     image.save("output/cercle.png");
-    // }
-
 /**************** Animation disque ******************/
     // {
     //     int numberOfImages = 11; // Nombre d'images pour l'animation
@@ -453,39 +441,9 @@ int main()
     //     }
     // }
 
-    // {
-    //     sil::Image image{500/*width*/, 500/*height*/};
-    //     rosace(image);
-    //     image.save("output/rosace.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     mosaique(image);
-    //     image.save("output/mosaique_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     mosaique_mirror(image);
-    //     image.save("output/mosaique_miroir_imac.png");
-    // }
-    // {
-    //     sil::Image image{"images/logo.png"};
-    //     mosaique_double_mirror(image);
-    //     image.save("output/mosaique_double_miroir_imac.png");
-    // }
-    // {
-    //     sil::Image image{500, 500};
-    //     fractals(image);
-    //     image.save("output/fractale.png");
-    // }
-    // {
-    //     sil::Image image{300, 200};
-    //     fading_color(image);
-    //     image.save("output/degrade_couleur.png");
-    // }
     {
         sil::Image image{"images/logo.png"};
-        glitch(image);
-        image.save("output/glitch.png");
+        tri_pixels(image);
+        image.save("output/tri_de_pixels.png");
     }
 }

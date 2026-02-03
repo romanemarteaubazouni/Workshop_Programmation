@@ -2,7 +2,24 @@
 
 Workshop de ProgAlgo, IMAC2028 S1
 
-L'aspect mathématique des exercices m'a facilité la vie !
+Tous les exercices ont été réalisés sous forme de fonctions individuelles, puis la création des images a été faite dans le main, sous la forme suivante :
+int main()
+{
+    {
+        sil::Image image{"images/logo.png"}; // Lis l'image
+        green(image); // Utilise la fonction pour modifier l'image
+        image.save("output/green_imac.png"); // Sauvegarde l'image
+    }
+    {
+        sil::Image image{"images/logo.png"};
+        swapRedBlue(image);
+        image.save("output/swaped_imac.png");
+    }
+...
+}
+Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
+
+RMQ : L'aspect mathématique des exercices m'a facilité la vie !
 
 ## Exercice 1 :
 ![alt text](./output/green_imac.png)
@@ -42,6 +59,7 @@ L'aspect mathématique des exercices m'a facilité la vie !
 ![alt text](./output/rosace.png)
 
 ## Exercice 12 :
+J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une ligne puis une colonne)
 ![alt text](./output/mosaique_imac.png)
 ![alt text](./output/mosaique_miroir_imac.png)
 ![alt text](./output/mosaique_double_miroir_imac.png)
@@ -50,6 +68,7 @@ L'aspect mathématique des exercices m'a facilité la vie !
 ![alt text](./output/glitch.png)
 
 ## Exercice 14 :
+![alt text](./output/tri_de_pixels.png)
 
 ## Exercice 15 :
 ![alt text](./output/fractale.png)
