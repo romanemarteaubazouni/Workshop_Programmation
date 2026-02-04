@@ -23,68 +23,82 @@ int main()
 Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
 
 RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa) et j'ai pu avancé rapidement sur les rosaces et rotations !
-La fractale de Mandelbrot avait déjà été codée de mon coté (workshop d'Anthony).
 
-## Exercice 1 :
+# Images de référence
+![alt text](./images/logo.png)
+![alt text](./images/photo.jpg)
+![alt text](./images/photo_faible_contraste.jpg)
+
+# Exercices réalisés
+## Nuances de vert
 ![alt text](./output/green_imac.png)
 
-## Exercice 2 :
+## Inversion de couleur (bleu <--> rouge)
 ![alt text](./output/swaped_imac.png)
 
-## Exercice 3 :
+## Noir et blanc
 ![alt text](./output/n&b_imac.png)
 
-## Exercice 4 :
+## Négatif
 ![alt text](./output/negatif_imac.png)
 
-## Exercice 5 :
+## Dégradé de noir et blanc
+Le pourcentage de noir varie en fonction de la coordonnée x.
 ![alt text](./output/degrade_n&b.png)
 
-## Exercice 6 :
+## Mirroir
 ![alt text](./output/miroir_imac.png)
 
-## Exercice 7 :
+## Bruit aléatoire
+L'aléatoire est utilisé pour la position (x, y) des pixels et pour leur couleur (aléatoire pour chaque composante).
 ![alt text](./output/bruit_imac.png)
 
-## Exercice 8 :
+## Rotation 90°
+Pour chaque pixel, on remplace ses coordonnées par ses nouvelles :
+```
+x' = image.height() - 1 - y
+y' = x
+```
 ![alt text](./output/rotation90_imac.png)
 
-## Exercice 9 :
+## RGB Split
+Utilisation de l'indice : pour chaque pixel, on prend un peu du rouge et du vert des pixels voisins.
 ![alt text](./output/rgb_split_imac.png)
 
-## Exercice 10 :
+## Différentes luminosités
 ![alt text](./output/high_lum_imac.png)
 ![alt text](./output/low_lum_imac.png)
 
-## Exercice 11 :
+## Disque, cercle, rosace
 ![alt text](./output/disque.png)
 ![alt text](./output/cercle.png)
+Pour l'animation, une boucle a été réalisée dans le main pour générer les images successives. Pour faciliter cette animation, des paramètres ont été ajoutés dans la fonction disk (et circle d'ailleurs pour faciliter la rosace).
 ![alt text](./output/animation/disque_animation.gif)
 ![alt text](./output/rosace.png)
 
-## Exercice 12 :
-J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une ligne puis une colonne)
+## Mosaïques
+J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une image sur 2 puis une ligne sur 2)
 
 ![alt text](./output/mosaique_imac.png)
 ![alt text](./output/mosaique_miroir_imac.png)
 ![alt text](./output/mosaique_double_miroir_imac.png)
 
-## Exercice 13 :
+## Glitch
 ![alt text](./output/glitch.png)
 
-## Exercice 14 :
+## Tri de pixels
+Le tri a été fait à l'aide du code Processing présenté dans la vidéo YouTube. On génère aléatoire la position et la taille d'une ligne de pixels, puis on la tri par luminosité de pixels.
 ![alt text](./output/tri_de_pixels.png)
 
-## Exercice 15 :
+## Fractale
+Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony. J'ai donc repris mon code Processing et je l'ai adapté.
 ![alt text](./output/fractale.png)
 
-## Exercice 16 :
+## Dégradé de couleur
 ![alt text](./output/degrade_couleur.png)
 ![alt text](./output/degrade_couleur_ameliore.png)
 
-## Exercice 17 :
-
-## Exercice 18 :
+## Normalisatio d'histogramme
 Au début, j'avais la logique suivante :
 ```
 void normalisation(sil::Image& image)
@@ -103,5 +117,5 @@ void normalisation(sil::Image& image)
 Je normalisais donc la luminorisité de toutes les composantes en même temps (et non pas chaque composante individuellement) ce qui me donnait un rendu en gris. Après plusieurs essais, j'ai donc séparé les composantes.
 ![alt text](./output/normalisation_de_histogramme.png)
 
-## Exercice 19 :
+## Vortex
 ![alt text](./output/vortex.png)
