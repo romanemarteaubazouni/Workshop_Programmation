@@ -575,12 +575,7 @@ void vortex(sil::Image& image)
     }
     image = result;
 }
-
-/*Principe de l'algo général (vidéo) :
-Pour chaque pixel :
-- on centre le kernel sur le pixel
-- on additionne le tout
-- on applique le résultat au pixel*/
+// Convolution 2D
 void convolution(sil::Image &image, const std::vector<std::vector<float>>& kernel)
 {    
     // VARIABLES
@@ -602,11 +597,12 @@ void convolution(sil::Image &image, const std::vector<std::vector<float>>& kerne
         {
             glm::vec3 sum{0.f}; // Somme des couleurs voisines
 
-            // On parcourt le kernel pour faire la somme des couleurs
+            // On parcourt le kernel pour faire la somme pondérée des couleurs
             for (int kx{}; kx < kw; ++kx)
             {
                 for (int ky{}; ky < kh; ++ky)
                 {
+                    // Coordonnées du voisin étudié
                     int pixelX = x + kx - centerKX;
                     int pixelY = y + ky - centerKY;
                     // Pb de bords à régler
@@ -621,6 +617,83 @@ void convolution(sil::Image &image, const std::vector<std::vector<float>>& kerne
         }
     }
     image = result;
+}
+// Convolutions 1D
+void convolution_boxBlur_horizontal(sil::Image &image, const std::vector<float>& kernel)
+{    
+    // VARIABLES
+    // Taille de l'image
+    int w = image.width();
+    int h = image.height();
+    // Taille du kernel
+    int kw = kernel.size(); // Nombre de lignes
+    // Centre du kernel
+    int centerKX = kw / 2;
+    
+    sil::Image result = image;
+    
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            glm::vec3 sum{0.f}; // Somme des couleurs voisines
+
+            // On parcourt le kernel pour faire la somme pondérée des couleurs
+            for (int kx{}; kx < kw; ++kx)
+            {
+                // Coordonnées du voisin étudié
+                int pixelX = x + kx - centerKX;
+                // Pb de bords à régler
+                if (pixelX >= 0 && pixelX < w)
+                {
+                    sum += (image.pixel(pixelX, y) * kernel[kx]);
+                }
+                
+            }
+            result.pixel(x, y) = sum;
+        }
+    }
+    image = result;
+}
+void convolution_boxBlur_vertical(sil::Image &image, const std::vector<float>& kernel)
+{    
+    // VARIABLES
+    // Taille de l'image
+    int w = image.width();
+    int h = image.height();
+    // Taille du kernel
+    int kh = kernel.size(); // Nombre de colonnes
+    // Centre du kernel
+    int centerKY = kh / 2;
+    
+    sil::Image result = image;
+    
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            glm::vec3 sum{0.f}; // Somme des couleurs voisines
+
+            // On parcourt le kernel pour faire la somme pondérée des couleurs
+            for (int ky{}; ky < kh; ++ky)
+            {
+                // Coordonnées du voisin étudié
+                int pixelY = y + ky - centerKY;
+                // Pb de bords à régler
+                if (pixelY >= 0 && pixelY < h)
+                {
+                    sum += (image.pixel(x, pixelY) * kernel[ky]);
+                }
+                
+            }
+            result.pixel(x, y) = sum;
+        }
+    }
+    image = result;
+}
+
+void diff_gaussien(sil::Image &image)
+{
 }
 
 int main()
@@ -649,9 +722,10 @@ int main()
     //     }
     // }
 
-    {
-        sil::Image image{"images/logo.png"};
-        convolution(image, {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}});
-        image.save("output/convolution.png");
-    }
+    // {
+    //     sil::Image image{"images/logo.png"};
+    //     convolution_boxBlur_vertical(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
+    //     convolution_boxBlur_horizontal(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
+    //     image.save("output/convolution/convolution_blur_1D.png");
+    // }
 }

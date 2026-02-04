@@ -119,3 +119,22 @@ Je normalisais donc la luminorisité de toutes les composantes en même temps (e
 
 ## Vortex
 ![alt text](./output/vortex.png)
+
+## Convolution
+Principe de l'algo général (vidéo) :
+Pour chaque pixel :
+- on centre le kernel sur le pixel
+- on additionne les couleurs voisines pondérées par la valeur du kernel sur ce pixel
+- on applique le résultat au pixel
+
+Le plus compliqué était de trouver les formules de pixelX et pixelY car il fallait parcourir un vecteur de vecteur donc trouver les indices a été long.
+![alt text](./output/convolution/convolution_emboss.png)
+![alt text](./output/convolution/convolution_outline.png)
+![alt text](./output/convolution/convolution_sharpen.png)
+
+### Blur naïf
+![alt text](./output/convolution/convolution_blur_naif.png)
+### Blur séparé
+Le principe est de passer deux kernels 1D l'un après l'autre, un kernel horizontal puis un kernel vertical.
+![alt text](./output/convolution/convolution_blur_1D.png)
+J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement puis verticalement.
