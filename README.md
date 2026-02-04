@@ -109,7 +109,24 @@ Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony
 ![alt text](./output/tramage/tramage_random_noise.png)
 
 Ordered dithering avec matrice de Bayer 4x4 :
+
 Principe du code : au lieu de se limiter à tester la luminosité d'un pixel par rapport à 0.5, on lui ajoute un facteur dépendant de sa position et de la matrice de Bayer, puis on compare cette luminosité par rapport à 0.5 (principe de base).
+L'algorithme codait est celui du site internet, traduit en C++.
+```
+for (int sy = 0; sy < viewport.height; sy++) {
+        float orig_color = get_screen_gradient(sy);
+        for (int sx = 0; sx < viewport.width; sx++) {
+            int color_result = BLACK;
+            float bayer_value = bayer_matrix_4x4[sy % bayer_n][sx % bayer_n];
+            float output_color = orig_color + (bayer_r * bayer_value);
+            // Color screen blue to white
+            if (output_color < (NUM_VALUES / 2)) {
+                color_result = WHITE;
+            }
+            *PIXEL_PTR((&screen), sx, sy, 1) = color_result;
+        }
+    }
+```
 
 ![alt text](./output/tramage/ordered_tramage.png)
 
@@ -157,3 +174,6 @@ Le principe est de passer deux kernels 1D l'un après l'autre, un kernel horizon
 ![alt text](./output/convolution/convolution_blur_1D.png)
 
 J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement puis verticalement.
+Le principe de la différence de gaussienne utilisé est celui de la vidéo YouTube (on fait une différence entre 2 flous, puis on fonce les contours).
+
+![alt text](./output/convolution/difference_de_gaussienne.png)

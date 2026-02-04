@@ -768,9 +768,11 @@ void diff_gaussienne(sil::Image &image)
     {
         for (int y {0}; y < image.height(); ++y)
         {
-            image.pixel(x, y) = blurred_2D.pixel(x, y) - blurred_1D.pixel(x, y);
-            float b = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.f;
-            if (b > 0.009)
+            glm::vec3 pix = image.pixel(x, y);
+            pix = blurred_2D.pixel(x, y) - blurred_1D.pixel(x, y);
+            
+            float b = (pix.r + pix.g + pix.b) / 3.f;
+            if (b > 0.01f)
             {
                 image.pixel(x, y) = glm::vec3(0.f);
             }
