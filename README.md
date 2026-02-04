@@ -44,6 +44,7 @@ RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa)
 
 ## Dégradé de noir et blanc
 Le pourcentage de noir varie en fonction de la coordonnée x.
+
 ![alt text](./output/degrade_n&b.png)
 
 ## Mirroir
@@ -51,6 +52,7 @@ Le pourcentage de noir varie en fonction de la coordonnée x.
 
 ## Bruit aléatoire
 L'aléatoire est utilisé pour la position (x, y) des pixels et pour leur couleur (aléatoire pour chaque composante).
+
 ![alt text](./output/bruit_imac.png)
 
 ## Rotation 90°
@@ -72,7 +74,9 @@ Utilisation de l'indice : pour chaque pixel, on prend un peu du rouge et du vert
 ## Disque, cercle, rosace
 ![alt text](./output/disque.png)
 ![alt text](./output/cercle.png)
+
 Pour l'animation, une boucle a été réalisée dans le main pour générer les images successives. Pour faciliter cette animation, des paramètres ont été ajoutés dans la fonction disk (et circle d'ailleurs pour faciliter la rosace).
+
 ![alt text](./output/animation/disque_animation.gif)
 ![alt text](./output/rosace.png)
 
@@ -88,15 +92,21 @@ J'ai laissé une fonction différente par étape de mosaïques afin de laisser m
 
 ## Tri de pixels
 Le tri a été fait à l'aide du code Processing présenté dans la vidéo YouTube. On génère aléatoire la position et la taille d'une ligne de pixels, puis on la tri par luminosité de pixels.
+
 ![alt text](./output/tri_de_pixels.png)
 
 ## Fractale
 Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony. J'ai donc repris mon code Processing et je l'ai adapté.
+
 ![alt text](./output/fractale.png)
 
 ## Dégradé de couleur
 ![alt text](./output/degrade_couleur.png)
 ![alt text](./output/degrade_couleur_ameliore.png)
+
+## Tramage
+![alt text](./output/tramage/tramage_basic.png)
+![alt text](./output/tramage/tramage_random_noise.png)
 
 ## Normalisatio d'histogramme
 Au début, j'avais la logique suivante :
@@ -115,6 +125,7 @@ void normalisation(sil::Image& image)
 }
 ```
 Je normalisais donc la luminorisité de toutes les composantes en même temps (et non pas chaque composante individuellement) ce qui me donnait un rendu en gris. Après plusieurs essais, j'ai donc séparé les composantes.
+
 ![alt text](./output/normalisation_de_histogramme.png)
 
 ## Vortex
@@ -128,6 +139,7 @@ Pour chaque pixel :
 - on applique le résultat au pixel
 
 Le plus compliqué était de trouver les formules de pixelX et pixelY car il fallait parcourir un vecteur de vecteur donc trouver les indices a été long.
+
 ![alt text](./output/convolution/convolution_emboss.png)
 ![alt text](./output/convolution/convolution_outline.png)
 ![alt text](./output/convolution/convolution_sharpen.png)
@@ -136,5 +148,6 @@ Le plus compliqué était de trouver les formules de pixelX et pixelY car il fal
 ![alt text](./output/convolution/convolution_blur_naif.png)
 ### Blur séparé
 Le principe est de passer deux kernels 1D l'un après l'autre, un kernel horizontal puis un kernel vertical.
+
 ![alt text](./output/convolution/convolution_blur_1D.png)
 J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement puis verticalement.

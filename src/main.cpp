@@ -504,6 +504,38 @@ void better_color_fading(sil::Image& image) // Dégradé de couleurs Oklab
     }
 }
 
+void tramage(sil::Image &image)
+{
+    for (glm::vec3 &pix : image.pixels())
+    {
+        float b = (pix.r + pix.g + pix.b) / 3.f;
+        if (b > 0.5)
+        {
+            pix = glm::vec3(1.f);
+        }
+        else
+        {
+            pix = glm::vec3(0.f);
+        }
+    }
+}
+
+void tramage_random_noise(sil::Image &image)
+{
+    for (glm::vec3 &pix : image.pixels())
+    {
+        float b = (pix.r + pix.g + pix.b) / 3.f;
+        if (b + (random_float(0.f, 1.f) - 0.5f) > 0.5)
+        {
+            pix = glm::vec3(1.f);
+        }
+        else
+        {
+            pix = glm::vec3(0.f);
+        }
+    }
+}
+
 void normalisation(sil::Image& image)
 {
     float recordDark = 2.f;
@@ -728,4 +760,9 @@ int main()
     //     convolution_boxBlur_horizontal(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
     //     image.save("output/convolution/convolution_blur_1D.png");
     // }
+    {
+        sil::Image image{"images/photo.jpg"};
+        tramage(image);
+        image.save("output/tramage_basic.png");
+    }
 }
