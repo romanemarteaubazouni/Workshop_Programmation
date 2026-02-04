@@ -1,5 +1,6 @@
 #include <sil/sil.hpp>
 #include <iostream>
+#include <vector>
 #include "random.hpp"
 #include <cmath>
 #include <complex>
@@ -503,13 +504,6 @@ void better_color_fading(sil::Image& image) // Dégradé de couleurs Oklab
     }
 }
 
-/************************************/
-
-void tramage(sil::Image& image)
-{
-//
-}
-
 void normalisation(sil::Image& image)
 {
     float recordDark = 2.f;
@@ -582,6 +576,53 @@ void vortex(sil::Image& image)
     image = result;
 }
 
+/*Principe de l'algo général (vidéo) :
+Pour chaque pixel :
+- on centre le kernel sur le pixel
+- on additionne le tout
+- on applique le résultat au pixel*/
+void convolution(sil::Image &image, const std::vector<std::vector<float>>& kernel)
+{    
+    // VARIABLES
+    // Taille de l'image
+    int w = image.width();
+    int h = image.height();
+    // Taille du kernel
+    int kw = kernel[0].size(); // Nombre de colonnes
+    int kh = kernel.size(); // Nombre de lignes
+    // Centre du kernel
+    int centerKX = kw / 2;
+    int centerKY = kh / 2;
+    
+    sil::Image result = image;
+    
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            glm::vec3 sum{0.f}; // Somme des couleurs voisines
+
+            // On parcourt le kernel pour faire la somme des couleurs
+            for (int kx{}; kx < kw; ++kx)
+            {
+                for (int ky{}; ky < kh; ++ky)
+                {
+                    int pixelX = x + kx - centerKX;
+                    int pixelY = y + ky - centerKY;
+                    // Pb de bords à régler
+                    if (pixelX >= 0 && pixelX < w
+                        && pixelY >= 0 && pixelY < h)
+                    {
+                        sum += (image.pixel(pixelX, pixelY) * kernel[ky][kx]);
+                    }
+                }
+            }
+            result.pixel(x, y) = sum;
+        }
+    }
+    image = result;
+}
+
 int main()
 {
     // {
@@ -610,7 +651,7 @@ int main()
 
     {
         sil::Image image{"images/logo.png"};
-        vortex(image);
-        image.save("output/vortex.png");
+        convolution(image, {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}});
+        image.save("output/convolution.png");
     }
 }
