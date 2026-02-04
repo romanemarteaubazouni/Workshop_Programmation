@@ -605,11 +605,6 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
     return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
 }
 
-/*Principe du vortex :
-- pour chaque pixel, on calcule sa distance au centre
-- on lui assigne un angle qui varie en fonction de cette distance
-- enfin, on ajoute le nouveau pixel après rotation à l'image resultat
-(si pixel hors de l'image, il devient noir)*/
 void vortex(sil::Image& image)
 {
     sil::Image result = image;
@@ -641,7 +636,8 @@ void vortex(sil::Image& image)
 }
 
 // Convolution 2D
-void convolution(sil::Image &image, const std::vector<std::vector<float>>& kernel)
+// Principe appliquée est celui de la vidéo YouTube
+void convolution_2D(sil::Image &image, const std::vector<std::vector<float>>& kernel)
 {    
     // VARIABLES
     // Taille de l'image
@@ -757,8 +753,33 @@ void convolution_boxBlur_vertical(sil::Image &image, const std::vector<float>& k
     image = result;
 }
 
-void diff_gaussien(sil::Image &image)
+void diff_gaussienne(sil::Image &image)
 {
+    /*But : "soustraire" l'image avec le blur naïf et avec le blur séparé
+    (horizontal puis vertical) puis redessiner les lignes*/
+    sil::Image blurred_2D = image;
+    sil::Image blurred_1D = image;
+    
+    convolution_2D(blurred_2D, {{0.0625, 0.125, 0.0625}, {0.125, 0.25, 0.125}, {0.0625, 0.125, 0.0625}});
+    convolution_boxBlur_vertical(blurred_1D, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
+    convolution_boxBlur_horizontal(blurred_1D, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
+
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            image.pixel(x, y) = blurred_2D.pixel(x, y) - blurred_1D.pixel(x, y);
+            float b = (image.pixel(x, y).r + image.pixel(x, y).g + image.pixel(x, y).b) / 3.f;
+            if (b > 0.009)
+            {
+                image.pixel(x, y) = glm::vec3(0.f);
+            }
+            else
+            {
+                image.pixel(x, y) = glm::vec3(1.f);
+            }
+        }
+    }
 }
 
 int main()
@@ -795,7 +816,7 @@ int main()
     // }
     {
         sil::Image image{"images/photo.jpg"};
-        ordered_tramage(image);
-        image.save("output/tramage/ordered_tramage.png");
+        diff_gaussienne(image);
+        image.save("output/convolution/difference_de_gaussienne.png");
     }
 }

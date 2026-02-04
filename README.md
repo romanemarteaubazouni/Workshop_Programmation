@@ -113,7 +113,7 @@ Principe du code : au lieu de se limiter à tester la luminosité d'un pixel par
 
 ![alt text](./output/tramage/ordered_tramage.png)
 
-## Normalisatio d'histogramme
+## Normalisation d'histogramme
 Au début, j'avais la logique suivante :
 ```
 void normalisation(sil::Image& image)
@@ -155,4 +155,5 @@ Le plus compliqué était de trouver les formules de pixelX et pixelY car il fal
 Le principe est de passer deux kernels 1D l'un après l'autre, un kernel horizontal puis un kernel vertical.
 
 ![alt text](./output/convolution/convolution_blur_1D.png)
+
 J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement puis verticalement.
