@@ -784,6 +784,18 @@ void diff_gaussienne(sil::Image &image)
     }
 }
 
+void k_means(sil::Image &image)
+{
+/*Notes :
+On choisit k couleurs de départ au hasard.
+Chaque pixel est assigné à la couleur la plus proche (groupes provisoires).
+On remplace chaque couleur initiale par la moyenne réelle des pixels dans son groupe.
+On répète jusqu’à ce que les groupes ne bougent plus.
+Pour chaque pixel :
+- mesurer la distance (souvent euclidienne) entre sa couleur et chaque couleur centrale ;
+- remplacer la couleur du pixel par celle du centre le plus proche.*/
+}
+
 int main()
 {
     // {
@@ -816,9 +828,4 @@ int main()
     //     convolution_boxBlur_horizontal(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
     //     image.save("output/convolution/convolution_blur_1D.png");
     // }
-    {
-        sil::Image image{"images/photo.jpg"};
-        diff_gaussienne(image);
-        image.save("output/convolution/difference_de_gaussienne.png");
-    }
 }
