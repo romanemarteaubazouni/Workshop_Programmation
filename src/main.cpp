@@ -547,21 +547,39 @@ glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
     return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
 }
 
+/*Principe du vortex :
+- pour chaque pixel, on calcule sa distance au centre
+- on lui assigne un angle qui varie en fonction de cette distance
+- enfin, on ajoute le nouveau pixel après rotation à l'image resultat
+(si pixel hors de l'image, il devient noir)*/
 void vortex(sil::Image& image)
 {
-/*Principe :
-- chaque point subit une rotation autour du centre de l'image (image.width()/2.f et image.height()/2.f);
-- plus en s'éloigne plus l'angle de rotation est grand (prop à la distance)
-*/
-    glm::vec3 center = image.pixel(image.width()/2.f, image.height()/2.f);
+    sil::Image result = image;
+
+    glm::vec2 center(image.width()/2.f, image.height()/2.f); // Position du centre
+    float diag = sqrt(image.width()*image.width() + image.height()*image.height()); // Distance max
+    
     for (int x{}; x < image.width(); ++x)
     {
         for (int y{}; y < image.height(); ++y)
         {
-            float angle = glm::distance(image.pixel(x, y), center);
-            rotated({x, y}, {image.width()/2.f, image.height()/2.f}, angle);
+            float d = glm::distance(glm::vec2(x, y), center);
+            float angle = (d  / diag) * 15 * M_PI; // Angle varie en fonction de la distance
+
+            glm::vec2 oldPosition = rotated(glm::vec2(x, y), center, angle);
+
+            if (oldPosition.x >= 0 && oldPosition.x < image.width() &&
+            oldPosition.y >= 0 && oldPosition.y < image.height())
+            {
+            result.pixel(x, y) = image.pixel(static_cast<int>(oldPosition.x), static_cast<int>(oldPosition.y));
+            }
+            else
+            {
+                result.pixel(x, y) = glm::vec3(0.f);
+            }
         }
     }
+    image = result;
 }
 
 int main()

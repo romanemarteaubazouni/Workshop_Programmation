@@ -64,6 +64,7 @@ La fractale de Mandelbrot avait déjà été codée de mon coté (workshop d'Ant
 
 ## Exercice 12 :
 J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une ligne puis une colonne)
+
 ![alt text](./output/mosaique_imac.png)
 ![alt text](./output/mosaique_miroir_imac.png)
 ![alt text](./output/mosaique_double_miroir_imac.png)
@@ -101,3 +102,6 @@ void normalisation(sil::Image& image)
 ```
 Je normalisais donc la luminorisité de toutes les composantes en même temps (et non pas chaque composante individuellement) ce qui me donnait un rendu en gris. Après plusieurs essais, j'ai donc séparé les composantes.
 ![alt text](./output/normalisation_de_histogramme.png)
+
+## Exercice 19 :
+![alt text](./output/vortex.png)
