@@ -108,6 +108,11 @@ Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony
 ![alt text](./output/tramage/tramage_basic.png)
 ![alt text](./output/tramage/tramage_random_noise.png)
 
+Ordered dithering avec matrice de Bayer 4x4 :
+Principe du code : au lieu de se limiter à tester la luminosité d'un pixel par rapport à 0.5, on lui ajoute un facteur dépendant de sa position et de la matrice de Bayer, puis on compare cette luminosité par rapport à 0.5 (principe de base).
+
+![alt text](./output/tramage/ordered_tramage.png)
+
 ## Normalisatio d'histogramme
 Au début, j'avais la logique suivante :
 ```

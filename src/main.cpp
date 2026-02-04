@@ -504,6 +504,7 @@ void better_color_fading(sil::Image& image) // Dégradé de couleurs Oklab
     }
 }
 
+/******************Tramage**********************/
 void tramage(sil::Image &image)
 {
     for (glm::vec3 &pix : image.pixels())
@@ -532,6 +533,37 @@ void tramage_random_noise(sil::Image &image)
         else
         {
             pix = glm::vec3(0.f);
+        }
+    }
+}
+// Reprise du code mis en URL
+void ordered_tramage(sil::Image &image)
+{
+    const int bayer_n = 4;
+    float bayer_matrix_4x4[][bayer_n] = {
+        {    -0.5,       0,  -0.375,   0.125 },
+        {    0.25,   -0.25,   0.375, - 0.125 },
+        { -0.3125,  0.1875, -0.4375,  0.0625 },
+        {  0.4375, -0.0625,  0.3125, -0.1875 },
+    };
+
+    for (int y{}; y < image.height(); ++y)
+    {
+        for (int x{}; x < image.width(); ++x)
+        {
+            glm::vec3 &pix = image.pixel(x, y);
+
+            glm::vec3 color_result(0.f); // Black
+            float origin_color = (pix.r + pix.g + pix.b) / 3.f; // Brightness
+
+            float bayer_value = bayer_matrix_4x4[y % bayer_n][x % bayer_n]; // On associe un élement de la matrice au pixel, selon sa position
+            float output_color = origin_color + bayer_value; // Implémentation
+
+            if (output_color >= 0.5f)
+            {
+                color_result = glm::vec3(1.f); // White
+            }
+            pix = color_result;
         }
     }
 }
@@ -607,6 +639,7 @@ void vortex(sil::Image& image)
     }
     image = result;
 }
+
 // Convolution 2D
 void convolution(sil::Image &image, const std::vector<std::vector<float>>& kernel)
 {    
@@ -762,7 +795,7 @@ int main()
     // }
     {
         sil::Image image{"images/photo.jpg"};
-        tramage(image);
-        image.save("output/tramage_basic.png");
+        ordered_tramage(image);
+        image.save("output/tramage/ordered_tramage.png");
     }
 }
