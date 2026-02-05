@@ -195,3 +195,14 @@ Le plus long à trouver a été la condition booléenne _changed_. Aussi, il a �
 ![alt text](./output/k_means/k_means_16.png)
 
 Maintenant, peut-être que ce code pourrait être amélioré et optimisé.
+
+## Kuwahara
+Pour chaque pixel, on calcule les couleurs moyennes de chaque zone (grâce à la fonction moyInSquare) de la grille voisine du pixel puis on calcule la variance de cette zone (grâce à la fonction varInSquare). On affecte au pixel la couleur de la zone ayant la variance la plus faible.
+
+(Problème d'initialisation de variables : 1er fail)
+
+![alt text](./output/kuwahara_fail.png)
+
+(Résultat final)
+
+![alt text](./output/kuwahara.png)

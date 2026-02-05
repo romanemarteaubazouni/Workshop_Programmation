@@ -454,7 +454,7 @@ glm::vec3 oklab_to_linear_rgb(Lab c)
 
 glm::vec3 sRGB_to_linear(glm::vec3 c) 
 {
-    glm::vec3 result;
+    glm::vec3 result{};
     for (int i = 0; i < 3; ++i)
     {
         if (c[i] <= 0.04045)
@@ -471,7 +471,7 @@ glm::vec3 sRGB_to_linear(glm::vec3 c)
 
 glm::vec3 linear_to_sRGB(glm::vec3 c) 
 {
-    glm::vec3 result;
+    glm::vec3 result{};
     for (int i = 0; i < 3; ++i)
     {
         if (c[i] <= 0.0031308f)
@@ -787,10 +787,10 @@ void diff_gaussienne(sil::Image &image)
 void k_means(sil::Image &image, int k)
 {    
     // Groupes de groupes de pixels (en fonction des couleurs)
-    std::vector<std::vector<glm::vec3>> groups;
+    std::vector<std::vector<glm::vec3>> groups{};
     groups.resize(k);
     // On choisit k couleurs de départ au hasard
-    std::vector<glm::vec3> colors;
+    std::vector<glm::vec3> colors{};
 
     for (int i{}; i < k; ++i)
     {
@@ -886,7 +886,7 @@ glm::vec3 moyInSquare(sil::Image &image, int startX, int endX, int startY, int e
     startY = std::max(0, startY);
     endY = std::min(image.height() - 1, endY);
     
-    glm::vec3 sum;
+    glm::vec3 sum{};
     int nb = 0;
     for (int x {startX}; x <= endX; ++x)
     {
@@ -899,7 +899,6 @@ glm::vec3 moyInSquare(sil::Image &image, int startX, int endX, int startY, int e
 
     return sum / static_cast<float>(nb);
 }
-
 // Fonction qui calcule la variance des couleurs d'un carré de pixel dans une image
 float varInSquare(sil::Image &image, int startX, int endX, int startY, int endY, glm::vec3 moy) {
     
@@ -909,15 +908,16 @@ float varInSquare(sil::Image &image, int startX, int endX, int startY, int endY,
     startY = std::max(0, startY);
     endY = std::min(image.height() - 1, endY);
     
-    float sum;
+    float sum{};
     int nb = 0;
     for (int x {startX}; x <= endX; ++x)
     {
         for (int y {startY}; y <= endY; ++y)
         {
-            sum+=(moy.r - image.pixel(x, y).r)*(moy.r - image.pixel(x, y).r) +
-            (moy.g - image.pixel(x, y).g)*(moy.g - image.pixel(x, y).g) +
-            (moy.b - image.pixel(x, y).b)*(moy.b - image.pixel(x, y).b);
+            // sum+=(moy.r - image.pixel(x, y).r)*(moy.r - image.pixel(x, y).r) +
+            // (moy.g - image.pixel(x, y).g)*(moy.g - image.pixel(x, y).g) +
+            // (moy.b - image.pixel(x, y).b)*(moy.b - image.pixel(x, y).b);
+            sum+=glm::distance(moy, image.pixel(x, y))*glm::distance(moy, image.pixel(x, y));     
             ++nb;
         }
     }
@@ -946,14 +946,14 @@ void kuwahara(sil::Image &image, int window_size)
             
             float vars[4] = {var1, var2, var3, var4};
             glm::vec3 colors[4] = {color1, color2, color3, color4};
-            int minIndex = 0;
+            int index = 0;
             for (int i = 1; i < 4; ++i) {
-                if (vars[i] < vars[minIndex])
+                if (vars[i] < vars[index])
                 {
-                    minIndex = i;
+                    index = i;
                 }
             }
-            result.pixel(x, y) = colors[minIndex];
+            result.pixel(x, y) = colors[index];
         }
     }
     image = result;
