@@ -878,7 +878,18 @@ void k_means(sil::Image &image, int k)
 
 void miroir_droste(sil::Image &image, int k)
 {
+    sil::Image result{image.width(), image.height()};
     
+    for (int i{}; i < k; ++i)
+    {
+        for (int x{}; x < image.width(); ++x)
+        {
+            for (int y{}; y < image.height(); ++y)
+            {
+                result.pixel(x, y) = image.pixel(x, y);
+            }
+        }
+    }
 }
 
 int main()
@@ -916,7 +927,7 @@ int main()
 
     {
         sil::Image image{"images/photo.jpg"};
-        k_means(image, 16);
-        image.save("output/k_means_16.png");
+        miroir_droste(image, 4);
+        image.save("output/miroir_droste");
     }
 }
