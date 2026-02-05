@@ -876,20 +876,87 @@ void k_means(sil::Image &image, int k)
     }
 }
 
-void miroir_droste(sil::Image &image, int k)
-{
-    sil::Image result{image.width(), image.height()};
+/*********************KUWAHARA***********************/
+// Fonction qui calcule la moyenne des couleurs d'un carré de pixel dans une image
+glm::vec3 moyInSquare(sil::Image &image, int startX, int endX, int startY, int endY) {
     
-    for (int i{}; i < k; ++i)
+    // Pour gérer les pbs de bords
+    startX = std::max(0, startX);
+    endX = std::min(image.width() - 1, endX);
+    startY = std::max(0, startY);
+    endY = std::min(image.height() - 1, endY);
+    
+    glm::vec3 sum;
+    int nb = 0;
+    for (int x {startX}; x <= endX; ++x)
     {
-        for (int x{}; x < image.width(); ++x)
+        for (int y {startY}; y <= endY; ++y)
         {
-            for (int y{}; y < image.height(); ++y)
-            {
-                result.pixel(x, y) = image.pixel(x, y);
-            }
+            sum+=image.pixel(x, y);
+            ++nb;
         }
     }
+
+    return sum / static_cast<float>(nb);
+}
+
+// Fonction qui calcule la variance des couleurs d'un carré de pixel dans une image
+float varInSquare(sil::Image &image, int startX, int endX, int startY, int endY, glm::vec3 moy) {
+    
+    // Pour gérer les pbs de bords
+    startX = std::max(0, startX);
+    endX = std::min(image.width() - 1, endX);
+    startY = std::max(0, startY);
+    endY = std::min(image.height() - 1, endY);
+    
+    float sum;
+    int nb = 0;
+    for (int x {startX}; x <= endX; ++x)
+    {
+        for (int y {startY}; y <= endY; ++y)
+        {
+            sum+=(moy.r - image.pixel(x, y).r)*(moy.r - image.pixel(x, y).r) +
+            (moy.g - image.pixel(x, y).g)*(moy.g - image.pixel(x, y).g) +
+            (moy.b - image.pixel(x, y).b)*(moy.b - image.pixel(x, y).b);
+            ++nb;
+        }
+    }
+
+    return sum / static_cast<float>(nb);
+}
+
+void kuwahara(sil::Image &image, int window_size)
+{
+    sil::Image result = image;
+
+    // On parcourt chaque pixel de l'image
+    for (int x {0}; x < image.width(); ++x)
+    {
+        for (int y {0}; y < image.height(); ++y)
+        {
+            glm::vec3 color1 = moyInSquare(image, x - window_size / 2 , x, y - window_size / 2 , y);
+            glm::vec3 color2 = moyInSquare(image, x, x + window_size / 2, y - window_size / 2 , y);
+            glm::vec3 color3 = moyInSquare(image, x - window_size / 2, x, y, y + window_size / 2);
+            glm::vec3 color4 = moyInSquare(image, x, x + window_size / 2, y, y + window_size / 2);
+
+            float var1 = varInSquare(image, x - window_size / 2 , x, y - window_size / 2 , y, color1);
+            float var2 = varInSquare(image, x, x + window_size / 2, y - window_size / 2 , y, color2);
+            float var3 = varInSquare(image, x - window_size / 2, x, y, y + window_size / 2, color3);
+            float var4 = varInSquare(image, x, x + window_size / 2, y, y + window_size / 2, color4);
+            
+            float vars[4] = {var1, var2, var3, var4};
+            glm::vec3 colors[4] = {color1, color2, color3, color4};
+            int minIndex = 0;
+            for (int i = 1; i < 4; ++i) {
+                if (vars[i] < vars[minIndex])
+                {
+                    minIndex = i;
+                }
+            }
+            result.pixel(x, y) = colors[minIndex];
+        }
+    }
+    image = result;
 }
 
 int main()
@@ -927,7 +994,7 @@ int main()
 
     {
         sil::Image image{"images/photo.jpg"};
-        miroir_droste(image, 4);
-        image.save("output/miroir_droste");
+        kuwahara(image, 11);
+        image.save("output/kuwahara.png");
     }
 }
