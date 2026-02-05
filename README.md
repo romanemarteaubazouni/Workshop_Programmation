@@ -177,3 +177,21 @@ J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement p
 Le principe de la différence de gaussienne utilisé est celui de la vidéo YouTube (on fait une différence entre 2 flous, puis on fonce les contours).
 
 ![alt text](./output/convolution/difference_de_gaussienne.png)
+
+## K-means
+Principe du K-means, d'après la vidéo :
+On choisit k couleurs de départ au hasard.
+Chaque pixel est assigné à la couleur la plus proche (groupes provisoires).
+On remplace chaque couleur initiale par la moyenne réelle des pixels dans son groupe.
+On répète jusqu’à ce que les groupes ne bougent plus.
+Pour chaque pixel :
+- mesurer la distance (souvent euclidienne) entre sa couleur et chaque couleur centrale ;
+- remplacer la couleur du pixel par celle du centre le plus proche.
+
+Le plus long à trouver a été la condition booléenne _changed_. Aussi, il a été difficile de ne pas se perdre dans toutes les boucles/variables et d'être au clair sur le principe du code.
+
+![alt text](./output/k_means/k_means_2.png)
+![alt text](./output/k_means/k_means_3.png)
+![alt text](./output/k_means/k_means_16.png)
+
+Maintenant, peut-être que ce code pourrait être amélioré et optimisé.

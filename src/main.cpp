@@ -591,7 +591,7 @@ void normalisation(sil::Image& image)
     // Pour chaque pixel, on adapte la luminosité en fonction des extrêmes
     for (glm::vec3& pix : image.pixels())
     {
-        float newR = (pix.r - recordDark)/(recordLight - recordDark);
+        float newR = (pix.r - recordDark)/(recordLight - recordDark); // La différence divisée par la différence la plus grande (on a un chiffre entre 0 et 1)
         float newG = (pix.g - recordDark)/(recordLight - recordDark);
         float newB = (pix.b - recordDark)/(recordLight - recordDark);
 
@@ -617,7 +617,7 @@ void vortex(sil::Image& image)
         for (int y{}; y < image.height(); ++y)
         {
             float d = glm::distance(glm::vec2(x, y), center);
-            float angle = (d  / diag) * 15 * M_PI; // Angle varie en fonction de la distance
+            float angle = (d  / diag) * 15 * M_PI; // Angle varie en fonction de la distance (facteur 15 trouvait expérimentalement)
 
             glm::vec2 oldPosition = rotated(glm::vec2(x, y), center, angle);
 
@@ -784,16 +784,101 @@ void diff_gaussienne(sil::Image &image)
     }
 }
 
-void k_means(sil::Image &image)
+void k_means(sil::Image &image, int k)
+{    
+    // Groupes de groupes de pixels (en fonction des couleurs)
+    std::vector<std::vector<glm::vec3>> groups;
+    groups.resize(k);
+    // On choisit k couleurs de départ au hasard
+    std::vector<glm::vec3> colors;
+
+    for (int i{}; i < k; ++i)
+    {
+        float r = random_float(0.f, 1.f);
+        float g = random_float(0.f, 1.f);
+        float b = random_float(0.f, 1.f);
+
+        colors.push_back(glm::vec3{r, g, b});;
+    }
+
+    bool changed = true;
+
+    do {
+        // On réinitialise nos groupes de pixels
+        for (std::vector<glm::vec3> &g : groups)
+        {
+            g.clear();
+        }
+
+        // Chaque pixel est assigné au groupe de couleur la plus proche
+        for (glm::vec3 &pix : image.pixels())
+        {
+            float dist = glm::distance(pix, colors[0]);
+            int placeInGroups = 0;
+
+            for (int i{}; i < k; ++i)
+            {
+                if (glm::distance(pix, colors[i]) <= dist)
+                {
+                    dist = glm::distance(pix, colors[i]);
+                    placeInGroups = i;
+                }
+            }
+            groups[placeInGroups].push_back(pix);
+        }
+
+        std::vector<glm::vec3> newColors;
+        newColors.resize(k);
+        // On recalcule nos couleurs
+        for (int i{}; i < k; ++i)
+        {
+            if (groups[i].size() == 0)
+            {
+                newColors[i] = colors[i];
+                continue;
+            }
+
+            glm::vec3 sum(0.f);
+            for (glm::vec3 &pix : groups[i])
+            {
+                sum += pix;
+            }
+            newColors[i] = sum / static_cast<float>(groups[i].size());
+        }
+
+        // On fait le changement des centres + vérification de changement
+        changed = false ;
+        for (int i{}; i < k; ++i)
+        {
+            if (glm::distance(newColors[i], colors[i]) > 0.0001f) // 0.0001 choisit aléatoirement
+            {
+                changed = true;
+            }
+            colors[i] = newColors[i]; // Le changement se fait ici, après la vérification de changed
+        }
+    } while (changed);
+
+    // On remplace enfin les pixels par leur nouvelle couleur
+    for (glm::vec3 &pix : image.pixels())
+    {
+        float dist = glm::distance(pix, colors[0]);
+        int bestColor = 0;
+
+        for (int i{}; i < k; ++i)
+        {
+            if (glm::distance(pix, colors[i]) <= dist)
+            {
+                dist = glm::distance(pix, colors[i]);
+                bestColor = i;
+            }
+        }
+        pix = colors[bestColor];
+    }
+}
+
+void miroir_droste(sil::Image &image, int k)
 {
-/*Notes :
-On choisit k couleurs de départ au hasard.
-Chaque pixel est assigné à la couleur la plus proche (groupes provisoires).
-On remplace chaque couleur initiale par la moyenne réelle des pixels dans son groupe.
-On répète jusqu’à ce que les groupes ne bougent plus.
-Pour chaque pixel :
-- mesurer la distance (souvent euclidienne) entre sa couleur et chaque couleur centrale ;
-- remplacer la couleur du pixel par celle du centre le plus proche.*/
+    
 }
 
 int main()
@@ -828,4 +913,10 @@ int main()
     //     convolution_boxBlur_horizontal(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
     //     image.save("output/convolution/convolution_blur_1D.png");
     // }
+
+    {
+        sil::Image image{"images/photo.jpg"};
+        k_means(image, 16);
+        image.save("output/k_means_16.png");
+    }
 }
