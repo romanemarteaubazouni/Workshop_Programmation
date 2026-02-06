@@ -214,7 +214,7 @@ Pour chaque pixel, on calcule les couleurs moyennes de chaque zone (grâce à la
 | :-----------: |:---------------------------:|
 |![image](./output/kuwahara_fail.png)| ![image](./output/kuwahara.png) |
 
-# Ce que j'en retient :
+# Ce que j'en retiens :
 - TOUJOURS INITIALISER SES VARIABLES
 Ici surtout, on travaille sur des couleurs, donc le résultat d'un code où l'on n'a pas initialisé toutes les variables peut rendre une image totalement aléatoire.
 (cf [Kuwahara](#-kuwahara))
