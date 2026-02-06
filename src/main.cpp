@@ -914,9 +914,6 @@ float varInSquare(sil::Image &image, int startX, int endX, int startY, int endY,
     {
         for (int y {startY}; y <= endY; ++y)
         {
-            // sum+=(moy.r - image.pixel(x, y).r)*(moy.r - image.pixel(x, y).r) +
-            // (moy.g - image.pixel(x, y).g)*(moy.g - image.pixel(x, y).g) +
-            // (moy.b - image.pixel(x, y).b)*(moy.b - image.pixel(x, y).b);
             sum+=glm::distance(moy, image.pixel(x, y))*glm::distance(moy, image.pixel(x, y));     
             ++nb;
         }
@@ -984,7 +981,7 @@ int main()
     //         image.save("output/animation/animation_" + std::to_string(i) + ".png");
     //     }
     // }
-    
+
     // {
     //     sil::Image image{"images/logo.png"};
     //     convolution_boxBlur_vertical(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
