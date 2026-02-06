@@ -59,6 +59,7 @@ y' = x
 
 ## ⭐⭐ RGB Split
 <u>Utilisation de l'indice :</u> pour chaque pixel, on prend un peu du rouge et du vert des pixels voisins.
+
 ![image](./output/rgb_split_imac.png)
 
 ## ⭐⭐ Différentes luminosités
