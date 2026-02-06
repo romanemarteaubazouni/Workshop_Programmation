@@ -25,9 +25,9 @@ Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une
 *RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa) et j'ai pu avancé rapidement sur les rosaces et rotations !*
 
 # Images de référence
-![image](./images/logo.png)
-<img src="./images/photo.jpg" alt="image" width="300">
-<img src="./images/photo_faible_contraste.jpg" alt="image" width="300">
+| Logo IMAC     | Photo de M. CHERRIER        | Photo de faible contraste  |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./images/logo.png)| ![image](./images/photo.jpg) |![image](./images/photo_faible_contraste.jpg)|
 
 # Exercices réalisés
 ## ⭐ Nuances de vert
@@ -68,8 +68,10 @@ y' = x
 ![image](./output/rgb_split_imac.png)
 
 ## ⭐⭐ Différentes luminosités
-<img src="./output/high_lum_imac.png" alt="image" width="300">
-<img src="./output/low_lum_imac.png" alt="image" width="300">
+
+| Grande luminosité     | Faible luminosité        |
+| :-----------: |:---------------------------:|
+|![image](./output/high_lum_imac.png)| ![image](./output/low_lum_imac.png) |
 
 ## ⭐⭐(⭐) Disque, cercle, rosace
 <img src="./output/disque.png" alt="image" width="300">
@@ -83,9 +85,9 @@ Pour l'animation, une boucle a été réalisée dans le main pour générer les 
 ## ⭐⭐ (⭐⭐⭐⭐) Mosaïques
 J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une image sur 2 puis une ligne sur 2)
 
-![image](./output/mosaique_imac.png)
-![image](./output/mosaique_miroir_imac.png)
-![image](./output/mosaique_double_miroir_imac.png)
+| Mosaique simple     | Mosaique miroir simple | Mosaique miroir double  |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./output/mosaique_imac.png)|![image](./output/mosaique_miroir_imac.png)|![image](./output/mosaique_double_miroir_imac.png)|
 
 ## ⭐⭐⭐ Glitch
 ![image](./output/glitch.png)
@@ -101,8 +103,10 @@ Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony
 <img src="./output/fractale.png" alt="image" width="300">
 
 ## ⭐⭐⭐(⭐) Dégradé de couleur
-![image](./output/degrade_couleur.png)
-![image](./output/degrade_couleur_ameliore.png)
+
+| Sans conversion    | Après conversion OkLab        |
+| :-----------: |:---------------------------:|
+|![image](./output/degrade_couleur.png)| ![image](./output/degrade_couleur_ameliore.png) |
 
 ## ⭐⭐⭐(⭐) Tramage
 <img src="./output/tramage/tramage_basic.png" alt="image" width="300">
@@ -164,9 +168,9 @@ Pour chaque pixel :
 
 Le plus compliqué était de trouver les formules de `pixelX` et `pixelY` car il fallait parcourir un vecteur de vecteur donc trouver les indices a été long.
 
-![image](./output/convolution/convolution_emboss.png)
-![image](./output/convolution/convolution_outline.png)
-![image](./output/convolution/convolution_sharpen.png)
+| Emboss     | Outline | Sharpen  |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./output/convolution/convolution_emboss.png)|![image](./output/convolution/convolution_outline.png)|![image](./output/convolution/convolution_sharpen.png)|
 
 #### Blur naïf
 ![image](./output/convolution/convolution_blur_naif.png)
@@ -196,35 +200,32 @@ Un fois les groupes bien fixes, on remplace la couleur de chaque pixel par sa no
 
 Le plus long à trouver a été la condition booléenne `changed`. Aussi, il a été difficile de ne pas se perdre dans toutes les boucles/variables et d'être au clair sur le principe du code.
 
-<img src="./output/k_means/k_means_2.png" alt="image" width="300">
-<img src="./output/k_means/k_means_3.png" alt="image" width="300">
-<img src="./output/k_means/k_means_16.png" alt="image" width="300">
+| k = 2     | k = 3 | k = 16  |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./output/k_means/k_means_2.png)|![image](./output/k_means/k_means_3.png)|![image](./output/k_means/k_means_16.png)|
 
 Maintenant, peut-être que ce code pourrait être amélioré et optimisé.
 
 ## ⭐⭐⭐⭐⭐ Kuwahara
 Pour chaque pixel, on calcule les couleurs moyennes de chaque zone (grâce à la fonction `moyInSquare`) de la grille voisine du pixel puis on calcule la variance de cette zone (grâce à la fonction `varInSquare`). On affecte au pixel la couleur de la zone ayant la variance la plus faible.
 
-(Problème d'initialisation de variables : 1er fail)
-
-<img src="./output/kuwahara_fail.png" alt="image" width="300">
-
-___
-
-**Résultat final**
-
-<img src="./output/kuwahara.png" alt="image" width="300">
+| Sans initialisation (fail)    | Résultat final <3        |
+| :-----------: |:---------------------------:|
+|![image](./output/kuwahara_fail.png)| ![image](./output/kuwahara.png) |
 
 # Ce que j'en retient :
 - TOUJOURS INITIALISER SES VARIABLES
 Ici surtout, on travaille sur des couleurs, donc le résultat d'un code où l'on n'a pas initialisé toutes les variables peut rendre une image totalement aléatoire.
 (cf [Kuwahara](#-kuwahara))
 <br>
+
 - Créer des fonctions annexes, hors du code principal, c'est quand même bien pratique, et beaucoup plus lisible !
 (cf [Kuwahara](#-kuwahara) et [K-Means](#-k-means))
 <br>
+
 - Les fonctions `std::max() et std::min()` sont pratiques pour gérer les problèmes de bords.
 (cf [Kuwahara](#-kuwahara) et [RGB Split](#-rgb-split))
 <br>
+
 - Il faut souvent faire une copie de l'image pour ne pas directement modifier notre image.
 (beaucoup d'exemples ici, comme le [Vortex](#-vortex))
