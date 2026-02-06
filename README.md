@@ -1,6 +1,8 @@
 # S1 | Prog&Algo: Workshop
 
 **Workshop de ProgAlgo, IMAC2028 S1**
+**Romane MARTEAU--BAZOUNI**
+
 
 Tous les exercices ont été réalisés sous forme de fonctions individuelles, puis la création des images a été faite dans le main, sous la forme suivante :
 
@@ -30,25 +32,16 @@ Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une
 |![image](./images/logo.png)| ![image](./images/photo.jpg) |![image](./images/photo_faible_contraste.jpg)|
 
 # Exercices réalisés
-## ⭐ Nuances de vert
-![image](./output/green_imac.png)
 
-## ⭐ Inversion de couleur (bleu <--> rouge)
-![image](./output/swaped_imac.png)
+| ⭐ Nuances de vert    | ⭐ Inversion de couleur|⭐ Noir et blanc |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./output/green_imac.png)|![image](./output/swaped_imac.png) |![image](./output/n&b_imac.png)|
 
-## ⭐ Noir et blanc
-![image](./output/n&b_imac.png)
+<br>
 
-## ⭐ Négatif
-![image](./output/negatif_imac.png)
-
-## ⭐ Dégradé de noir et blanc
-Le pourcentage de noir varie en fonction de la coordonnée x.
-
-![image](./output/degrade_n&b.png)
-
-## ⭐⭐ Miroir
-![image](./output/miroir_imac.png)
+| ⭐ Négatif   | ⭐ Dégradé de noir et blanc |⭐⭐ Miroir |
+| :-----------: |:---------------------------:|:----------------------------:|
+|![image](./output/negatif_imac.png)|![image](./output/degrade_n&b.png)|![image](./output/miroir_imac.png)|
 
 ## ⭐⭐ Bruit aléatoire
 L'aléatoire est utilisé pour la position (x, y) des pixels et pour leur couleur (aléatoire pour chaque composante).
@@ -74,13 +67,16 @@ y' = x
 |![image](./output/high_lum_imac.png)| ![image](./output/low_lum_imac.png) |
 
 ## ⭐⭐(⭐) Disque, cercle, rosace
-<img src="./output/disque.png" alt="image" width="300">
-<img src="./output/cercle.png" alt="image" width="300">
+
+| Disque     | Cercle        |
+| :-----------: |:---------------------------:|
+|![image](./output/disque.png)| ![image](./output/cercle.png) |
 
 Pour l'animation, une boucle a été réalisée dans le main pour générer les images successives. Pour faciliter cette animation, des paramètres ont été ajoutés dans la fonction `disk` (et circle d'ailleurs pour faciliter la rosace).
 
-<img src="./output/animation/disque_animation.gif" alt="gif" width="300">
-<img src="./output/rosace.png" alt="image" width="300">
+| Animation     | Rosace        |
+| :-----------: |:---------------------------:|
+|![image](./output/animation/disque_animation.gif)| ![image](./output/rosace.png) |
 
 ## ⭐⭐ (⭐⭐⭐⭐) Mosaïques
 J'ai laissé une fonction différente par étape de mosaïques afin de laisser mon chemin de pensée (d'abord trouver comment réaliser la mosaïque, puis retourner une image sur 2 puis une ligne sur 2)
@@ -109,8 +105,9 @@ Cette fractale avait été réalisée, de mon côté, dans le workshop d'Anthony
 |![image](./output/degrade_couleur.png)| ![image](./output/degrade_couleur_ameliore.png) |
 
 ## ⭐⭐⭐(⭐) Tramage
-<img src="./output/tramage/tramage_basic.png" alt="image" width="300">
-<img src="./output/tramage/tramage_random_noise.png" alt="image" width="300">
+| Tramage basique     | Tramage random        |
+| :-----------: |:---------------------------:|
+|![image](./output/tramage/tramage_basic.png)| ![image](./output/tramage/tramage_random_noise.png) |
 
 ___
 
@@ -172,12 +169,15 @@ Le plus compliqué était de trouver les formules de `pixelX` et `pixelY` car il
 | :-----------: |:---------------------------:|:----------------------------:|
 |![image](./output/convolution/convolution_emboss.png)|![image](./output/convolution/convolution_outline.png)|![image](./output/convolution/convolution_sharpen.png)|
 
-#### Blur naïf
-![image](./output/convolution/convolution_blur_naif.png)
+
+| Blur naïf     | Blur séparé        |
+| :-----------: |:---------------------------:|
+|![image](./output/convolution/convolution_blur_naif.png)| ![image](./output/convolution/convolution_blur_1D.png)|
+
 #### Blur séparé
 Le principe est de passer deux kernels 1D l'un après l'autre, un kernel horizontal puis un kernel vertical.
 
-![image](./output/convolution/convolution_blur_1D.png)
+
 
 J'ai ainsi créé deux fonctions qui utilisent les kernels 1D, horizontalement puis verticalement.
 
