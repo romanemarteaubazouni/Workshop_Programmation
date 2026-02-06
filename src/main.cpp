@@ -54,7 +54,7 @@ void fading(sil::Image& image) // Dégradé N&B
     }
 }
 
-void mirror(sil::Image &image) // Effet mirroir
+void mirror(sil::Image &image) // Effet miroir par rapport à l'axe (Oy)
 {
     sil::Image copy = image; // On créé une copie pour ne pas écraser les nouveaux pixels
     for (int x {0}; x < image.width(); ++x)
@@ -204,7 +204,7 @@ void mosaique(sil::Image &image)
     image = mosaique;
 }
 
-/*Idée pour la mosaïque miroir : on reprend le code précédent, puis dès q'uon boucle on inverse l'image (cad dès que x * 5 % image.width passe à 0)*/
+/*Idée pour la mosaïque miroir : on reprend le code précédent, puis dès qu'on boucle, on inverse l'image (cad dès que x * 5 % image.width passe à 0)*/
 
 void mosaique_mirror(sil::Image &image)
 {
@@ -401,7 +401,7 @@ void fractals(sil::Image &image)
         }
     }
 }
-
+/*************** Dégradé de rouge et vert ***************/
 void fading_color(sil::Image& image) // Dégradé de couleurs
 {
     glm::vec3 a(1.f, 0.f, 0.f); // Rouge
@@ -636,7 +636,7 @@ void vortex(sil::Image& image)
 }
 
 // Convolution 2D
-// Principe appliquée est celui de la vidéo YouTube
+// Principe appliqué est celui de la vidéo YouTube
 void convolution_2D(sil::Image &image, const std::vector<std::vector<float>>& kernel)
 {    
     // VARIABLES
@@ -984,17 +984,11 @@ int main()
     //         image.save("output/animation/animation_" + std::to_string(i) + ".png");
     //     }
     // }
-
+    
     // {
     //     sil::Image image{"images/logo.png"};
     //     convolution_boxBlur_vertical(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
     //     convolution_boxBlur_horizontal(image, {0.2f, 0.2f, 0.2f, 0.2f, 0.2f});
     //     image.save("output/convolution/convolution_blur_1D.png");
     // }
-
-    {
-        sil::Image image{"images/photo.jpg"};
-        kuwahara(image, 11);
-        image.save("output/kuwahara.png");
-    }
 }
