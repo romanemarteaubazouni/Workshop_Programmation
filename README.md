@@ -5,7 +5,7 @@
 **Romane MARTEAU--BAZOUNI**
 
 
-Tous les exercices ont été réalisés sous forme de fonctions individuelles, puis la création des images a été faite dans le main, sous la forme suivante :
+Tous les exercices ont été réalisés sous forme de fonctions individuelles, puis la création des images a été faite dans le `main`, sous la forme suivante :
 
 ```cpp
 int main()
@@ -23,7 +23,7 @@ int main()
 }
 ```
 
-Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du main, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
+Pour alléger le code, j'ai décidé de ne pas garder l'entièreté du `main`, une fois les images créées. Ainsi, j'ai laissé quelques exemples (ci-dessus), ainsi que le code pour l'animation du disque (car différent des autres).
 
 *RMQ : L'aspect mathématique des exercices m'a facilité la vie (vive la prépa) et j'ai pu avancé rapidement sur les rosaces et rotations !*
 
@@ -73,7 +73,7 @@ y' = x
 | :-----------: |:---------------------------:|
 |![image](./output/disque.png)| ![image](./output/cercle.png) |
 
-Pour l'animation, une boucle a été réalisée dans le main pour générer les images successives. Pour faciliter cette animation, des paramètres ont été ajoutés dans la fonction `disk` (et circle d'ailleurs pour faciliter la rosace).
+Pour l'animation, une boucle a été réalisée dans le `main` pour générer les 11 images successives. Pour faciliter cette animation, des paramètres ont été ajoutés dans la fonction `disk` (et `circle` d'ailleurs pour faciliter la rosace).
 
 | Animation     | Rosace        |
 | :-----------: |:---------------------------:|
@@ -224,7 +224,7 @@ Ici surtout, on travaille sur des couleurs, donc le résultat d'un code où l'on
 (cf [Kuwahara](#-kuwahara) et [K-Means](#-k-means))
 <br>
 
-- Les fonctions `std::max() et std::min()` sont pratiques pour gérer les problèmes de bords.
+- Les fonctions `std::max()` et `std::min()` sont pratiques pour gérer les problèmes de bords.
 (cf [Kuwahara](#-kuwahara) et [RGB Split](#-rgb-split))
 <br>
 
